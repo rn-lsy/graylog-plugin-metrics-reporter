@@ -1,0 +1,21 @@
+# Maven
+#target/
+dependency-reduced-pom.xml
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# IntelliJ IDEA
+out/
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse IDE
+.classpath
+.project
+.settings
+
+# OS X
+.DS_Store

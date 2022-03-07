@@ -1,0 +1,30 @@
+sudo: required
+dist: trusty
+language: java
+jdk:
+  - oraclejdk8
+addons:
+  apt:
+    packages:
+      - rpm
+cache:
+  directories:
+  - $HOME/.m2
+before_deploy:
+  - find . -type f -name 'original-*.jar' -delete
+  - mvn jdeb:jdeb
+  - mvn rpm:rpm
+deploy:
+  provider: releases
+  api_key:
+    secure: "LTtKB5Wg4onFNhetgG7s8cP33bjh9BOxVkZ8++7i/0mCXqZlelxz7zgQsmh8TWe5LNV53RLdOvu7cisbcFEMG4hIWrHUr6RFdCWhoa+nnD/CW2Tvq/4/QUnwTaR7jzZ82tMnvo/KXdyi+yzXUV+q1mXfYZ9e7bSZwHSh48VY74lei9j5VokMoYO01bAMwbPfUMS2uBaFXDIkcXIOt3j48FdR30vxbk1XXK169s2Jg/bAhlLAwV17pkks0acovtNhIjwmpWDl0HZlnOPEoKbfTI4tSX7Od25WfXcZaK7lZqId6taY0oxFWFRmlV34wcv0vPhtvmmHQ9b4yJ9ybuPHugegY13q2lSvXsCzklJkFbyWaXTyeHO9WxNCX34ESOuiwr+qmPsLtqINE4nBMEGokQ4PqqSgH68V4nZ2NUXy6hokz1SvbLa8basphvA0RYCPGszUB2nZGzjF2H9SXRGtCn4wWYstybnNIo+VRHvVClHDdq5WULmEebHTYwD6RMJ+G/BqWDZib/4j8hrLizjIGSPaehpD+7Trjsi/1t76eOLubrIsk2tLBc6v5UOO8webNIFYWIDogz5Qb0oguNtY6JdZZp5QUMAVcotx/wlzZiQ+5IJH9kKEtS0FGKwJgzmgXF8Db+i/Srox6jzcGenwh4JDLSkAt6jyhplnT5wWN84="
+  file_glob: true
+  file:
+    - "**/target/*.jar"
+    - "**/target/*.deb"
+    - "**/target/**/*.rpm"
+  skip_cleanup: true
+  on:
+    repo: graylog-labs/graylog-plugin-metrics-reporter
+    tags: true
+    jdk: oraclejdk8
